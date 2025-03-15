@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package currensy;
+option go_package = "github.com/m3w/usdt-rate/proto/currensy";
+
+service CurrencyService {
+  rpc GetRate(GetRateRequest) returns (GetRateResponse) {}
+  rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse) {}
+}
+
+message GetRateRequest {
+  string base_currency = 1;  // Например "USDT"
+  string target_currency = 2; // Например "USD"
+}
+
+message GetRateResponse {
+  double rate = 1;
+  string timestamp = 2;
+}
+
+message HealthCheckRequest {}
+
+message HealthCheckResponse {
+  enum ServingStatus {
+    UNKNOWN = 0;
+    SERVING = 1;
+    NOT_SERVING = 2;
+  }
+  ServingStatus status = 1;
+}
